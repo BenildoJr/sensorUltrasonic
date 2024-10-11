@@ -1,0 +1,37 @@
+const int trigPin = 10; 
+const int echoPin = 9; 
+const int ledPin = 13; 
+
+void setup() {
+  Serial.begin(9600); 
+  pinMode(trigPin, OUTPUT); 
+  pinMode(echoPin, INPUT);  
+  pinMode(ledPin, OUTPUT); 
+}
+
+void loop() {
+  long duration;
+  long cm; 
+
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2); 
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW); 
+
+  duration = pulseIn(echoPin, HIGH);
+
+  cm = microsecondsToCentimeters(duration);
+
+  if (cm < 20) {
+    digitalWrite(ledPin, HIGH); 
+  } else {
+    digitalWrite(ledPin, LOW); 
+  }
+
+  delay(100); 
+}
+
+long microsecondsToCentimeters(long microseconds) {
+  return microseconds / 29 / 2; 
+}
